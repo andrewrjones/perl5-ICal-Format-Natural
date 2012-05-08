@@ -10,26 +10,40 @@ our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(ical_format_natural);
 
 use Data::ICal;
+use Data::ICal::Entry::Event;
 use DateTime::Format::Natural;
+use DateTime::Format::ICal;
 
 sub ical_format_natural {
     my $in = shift;
 
-    my ( $date, $title ) = split '\.', $in;
-    $date  ||= '';
-    $title ||= '';
+    my ( $date, $summary ) = split '\.', $in;
+    $date    ||= '';
+    $summary ||= '';
     chomp $date;
-    chomp $title;
+    chomp $summary;
 
     # trim leading and trailing whitespace
-    $title =~ s/^\s+|\s+$//g;
+    $summary =~ s/^\s+|\s+$//g;
 
     # parse date
     my $parser = DateTime::Format::Natural->new;
     my $dt     = $parser->parse_datetime($date);
 
     if ( $parser->success ) {
-        return 1;
+        my $calendar = Data::ICal->new;
+
+        my $vevent = Data::ICal::Entry::Event->new;
+        $vevent->add_properties(
+            summary => $summary,
+            dtstart => DateTime::Format::ICal->format_datetime($dt),
+            dtend =>
+              DateTime::Format::ICal->format_datetime( $dt->add( hours => 1 ) ),
+        );
+        $calendar->add_entry($vevent);
+        $calendar->add_properties( method => 'PUBLISH' );
+
+        return $calendar;
     }
 
     return
