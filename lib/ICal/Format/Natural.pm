@@ -32,6 +32,8 @@ sub ical_format_natural {
     # trim leading and trailing whitespace
     $summary =~ s/^\s+|\s+$//g;
 
+    return 'error: no summary' unless $summary;
+
     # parse date
     my $parser = DateTime::Format::Natural->new;
     my $dt     = $parser->parse_datetime($date);
