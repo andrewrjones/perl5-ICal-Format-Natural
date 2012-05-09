@@ -14,6 +14,12 @@ use Data::ICal::Entry::Event;
 use DateTime::Format::Natural;
 use DateTime::Format::ICal;
 
+=method ical_format_natural( $string )
+
+Parses the string and returns an L<Data::ICal> object.
+
+=cut
+
 sub ical_format_natural {
     my $in = shift;
 
@@ -52,3 +58,28 @@ sub ical_format_natural {
 }
 
 1;
+
+=head1 SYNOPSIS
+
+  # only exported on demand
+  use ICal::Format::Natural qw(ical_format_natural);
+
+  my $ical = ical_format_natural('Tomorrow at noon. Lunch with Bob');
+  # creates an Data::ICal object with:
+  #   dtstart tomorrow 12:00
+  #   dtend tomorrow 13:00
+  #   summary Lunch with Bob
+
+=head1 DESCRIPTION
+
+C<ICal::Format::Natural> will (one day) take a human readable string and create an L<Data::ICal> object.
+
+NOTE: Currently this is pretty dumb and simply splits the sting on a fullstop, taking the first part as the date and the second part as the summary.
+
+I would love to improve this one day, but as always it's about finding the time. Any contributions and/or ideas are most welcome.
+
+=head1 CREDITS
+
+Thanks to Mark Stosberg who wrote L<ICal::QuickAdd>. It contained a simple version of the parser and was the basis for this module.
+
+=cut
