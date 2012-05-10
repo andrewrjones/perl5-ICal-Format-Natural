@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Test::More tests => 6;
-use FindBin qw($Bin);
 
 use ICal::Format::Natural qw(ical_format_natural);
 
