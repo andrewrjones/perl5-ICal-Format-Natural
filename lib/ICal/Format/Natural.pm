@@ -76,7 +76,7 @@ sub ical_format_natural {
 
 C<ICal::Format::Natural> will (one day) take a human readable string and create an L<Data::ICal> object.
 
-NOTE: Currently this is pretty dumb and simply splits the sting on a fullstop, taking the first part as the date and the second part as the summary.
+NOTE: Currently this is pretty dumb and simply splits the string on a fullstop, taking the first part as the date and the second part as the summary.
 
 I would love to improve this one day, but as always it's about finding the time. Any contributions and/or ideas are most welcome.
 
