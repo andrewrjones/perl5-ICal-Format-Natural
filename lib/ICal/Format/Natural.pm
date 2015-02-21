@@ -23,7 +23,7 @@ Parses the string and returns an L<Data::ICal> object.
 sub ical_format_natural {
     my $in = shift;
 
-    my ( $date, $summary ) = split '\.', $in;
+    my ( $date, $summary ) = split '\.', $in, 2;
     $date    ||= '';
     $summary ||= '';
     chomp $date;

@@ -38,3 +38,9 @@ sub error_ok {
     my $r = shift;
     like( $r, qr/^error/i, "$r is an error" );
 }
+
+# correct date and summary with multiple delimiters
+$result = ical_format_natural('Mar 31 1976 at 12:34. Lunch with Bob. Bring a present.');
+isa_ok( $result, 'Data::ICal' );
+is( @{ $result->entries }[0]->property('summary')->[0]->value,
+    'Lunch with Bob. Bring a present.' );
